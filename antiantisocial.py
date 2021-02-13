@@ -1,3 +1,8 @@
+def main():
+    function1()
 
-if __name__ == "__main__":
-    print("=========AntiAntiSocial=========")
+def function1():
+    print()
+
+
+main()
