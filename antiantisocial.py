@@ -1,9 +1,8 @@
+def main():
+    function1()
 
-if __name__ == "__main__":
-    print("=========AntiAntiSocial=========")
-    # Generate list of dummy names
-    dummy_names = []
+def function1():
+    print()
 
 
-    # Input dummy names into the User class
-
+main()
