@@ -1,6 +1,3 @@
-from typing import Any
-
-
 class User:
 
     def __init__(self, ID, name, passcode, major, interests, club, media_account, classes):
