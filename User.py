@@ -38,15 +38,15 @@ class User:
 
     def print_user(self, type = "normal"):
         if type == "normal":
-            print(self.name + "")
+            print(self.name)
         else:
-            print(self.id + "")
-            print(self.name + "")
-            print(self.major + "")
-            print(self.interests + "")
-            print(self.club + "")
-            print(self.media + "")
-            print(self.classes + "")
+            print(self.id, end=" ")
+            print(self.name, end=" ")
+            print(self.major, end=" ")
+            print(self.interests, end=" ")
+            print(self.club, end=" ")
+            print(self.media, end=" ")
+            print(self.classes)
 
 
 
