@@ -2,15 +2,23 @@ from typing import Any
 
 
 class User:
+
+
     def __init__(self, ID, name, passcode, major, interests, club, media_account, classes):
         self.id = ID
         self.name = name
         self.passcode = passcode
         self.major = major
         self.interests = interests
+        self.club = club
+        self.media = media_account
+        self.classes = classes
+
 
     def __init__(self):
         pass
+
+
 
     def get_id(self):
         return self.id
@@ -23,6 +31,17 @@ class User:
 
     def get_interests(self):
         return self.interests
+
+    def get_club(self):
+        return self.club
+
+    def get_media_account(self):
+        return self.media
+
+    def get_classes(self):
+        return self.classes
+
+
 
 
 
