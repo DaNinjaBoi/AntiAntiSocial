@@ -27,7 +27,7 @@ def generate_dummy_names():
         for i in range(5000):
             fname = random.choice(first_names)
             lname = random.choice(last_names)
-            f.write(str(fname+" "+lname+","+str(123000+i)+","+(''.join(pwstring) for i in range(10))+","
+            f.write(str(fname+" "+lname+","+str(123000+i)+","+ "test_password" +","
                         +random.choice(faculties)+","+random.choice(interests)+","+"https://instagram.com/"+
-                        fname+lname+","+random.choice(clubs)+","+"Dummy Class ID"))
+                        fname+lname+","+random.choice(clubs)+","+"Dummy Class ID\n"))
     print("done")

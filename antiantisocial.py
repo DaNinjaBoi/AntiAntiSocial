@@ -1,8 +1,2 @@
-def main():
-    function1()
-
-def function1():
-    print()
-
-
-main()
+import generateDummyNames
+generateDummyNames.generate_dummy_names()
