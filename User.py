@@ -40,12 +40,12 @@ class User:
         if type == "normal":
             print(self.name)
         else:
-            print(self.id, end=" ")
-            print(self.name, end=" ")
-            print(self.major, end=" ")
-            print(self.interests, end=" ")
-            print(self.club, end=" ")
-            print(self.media, end=" ")
+            print(self.id, end=", ")
+            print(self.name, end=", ")
+            print(self.major, end=", ")
+            print(self.interests, end=", ")
+            print(self.club, end=", ")
+            print(self.media, end=", ")
             print(self.classes)
 
 
