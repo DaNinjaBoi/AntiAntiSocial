@@ -3,7 +3,6 @@ from typing import Any
 
 class User:
 
-
     def __init__(self, ID, name, passcode, major, interests, club, media_account, classes):
         self.id = ID
         self.name = name
@@ -14,11 +13,8 @@ class User:
         self.media = media_account
         self.classes = classes
 
-
     def __init__(self):
         pass
-
-
 
     def get_id(self):
         return self.id
@@ -40,6 +36,21 @@ class User:
 
     def get_classes(self):
         return self.classes
+
+    def find_mutual_friends(self):
+        pass
+
+    def print_user(self, type = "normal"):
+        if type == "normal":
+            print(self.name + "")
+        else:
+            print(self.id + "")
+            print(self.name + "")
+            print(self.major + "")
+            print(self.interests + "")
+            print(self.club + "")
+            print(self.media + "")
+            print(self.classes + "")
 
 
 
