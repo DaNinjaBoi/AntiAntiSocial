@@ -21,6 +21,12 @@ clubs = ["Club 1", "Club 2","Club 3","Club 4"]
 
 def generate_dummy_names():
     with open("DummyNames.csv", "w") as f:
-        f.truncate(0)  # clear previous contents
+        pwstring = "abcdefghizklmnopqrstuvwxyz"
+        # f.truncate(0)  # clear previous contents
         for i in range(5000):
-            f.write(random.choice(first_names)+" "+random.choice(last_names)+","+str(123000+i)+","+
+            fname = random.choice(first_names)
+            lname = random.choice(last_names)
+            f.write(str(fname+" "+lname+","+str(123000+i)+","+(''.join(pwstring) for i in range(10))+","
+                        +random.choice(faculties)+","+random.choice(interests)+","+"https://instagram.com/"+
+                        fname+lname+","+random.choice(clubs)+","+"Dummy Class ID"))
+    print("done")
