@@ -1,8 +1,3 @@
-def main():
-    pass
 
-def function1():
-    pass
-
-
-main()
+if __name__ == "__main__":
+    print("=========AntiAntiSocial=========")
