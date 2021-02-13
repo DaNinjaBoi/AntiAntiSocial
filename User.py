@@ -1,17 +1,16 @@
 class User:
 
-    def __init__(self, ID, name, passcode, major, interests, club, media_account, classes):
-        self.id = ID
-        self.name = name
-        self.passcode = passcode
-        self.major = major
-        self.interests = interests
-        self.club = club
-        self.media = media_account
-        self.classes = classes
+    def __init__(self, csv):
+        splitline = csv.split(",")
+        self.id = splitline[1]
+        self.name = splitline[0]
+        self.passcode = splitline[2]
+        self.major = splitline[3]
+        self.interests = splitline[4]
+        self.club = splitline[6]
+        self.media = splitline[5]
+        self.classes = splitline[7]
 
-    def __init__(self):
-        pass
 
     def get_id(self):
         return self.id
