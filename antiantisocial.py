@@ -6,10 +6,11 @@ import AI
 
 if __name__ == "__main__":
 
-    # students = AAS_IO.importDummyNames()
+    students = AAS_IO.importDummyNames()
     # print(AI.preprocess(students[22],students[5]))
     ai = AI.AAS_AI()
-    ai.load_from_file_and_train()
+    ai.load_from_file()
+    print(ai.classify(students[59],students[1693]))
 
 
 

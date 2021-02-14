@@ -1,6 +1,7 @@
 import antiantisocial
 import User
 import pandas as pd
+import numpy as np
 import pickle
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -71,7 +72,7 @@ class AAS_AI():
     def __init__(self):
         self.logreg = []
 
-    def load_from_file_and_train(self):
+    def create_logreg_and_train(self):
         data = pd.read_csv('training.csv', header=None)
         targets = pd.read_csv('training_targets.csv', header=None)
         targets = targets.values.ravel()
@@ -99,9 +100,8 @@ class AAS_AI():
         with open('saved_model', 'rb') as f:
             self.logreg = pickle.load(f)
 
-
-    def classify(self):
-        return
+    def classify(self, user1, user2):
+        return self.logreg.predict_proba(np.array(preprocess(user1,user2)).reshape(1,-1))
 
     def train(self):
         pass
