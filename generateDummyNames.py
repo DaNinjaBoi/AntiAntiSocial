@@ -41,6 +41,16 @@ def generate_dummy_classes():
     return classes
 
 
+def generate_clubs():
+    import random
+    clubs = []
+    for i in range(random.randint(0,3)):
+        j = random.choice(["club 1", "club 2", "club 3", "club 4", " club 5", "club 6"])
+        if j not in clubs:
+            clubs.append(j)
+    return clubs
+
+
 def generate_dummy_names():
     import random
 
@@ -71,7 +81,7 @@ def generate_dummy_names():
             fname = random.choice(first_names)
             lname = random.choice(last_names)
             f.write(str(fname+" "+lname+"%"+str(123000+i)+"%"+ "test_password" +"%"
-                        + random.choice(majors)+"%"+str(generate_interests())+"%"+str(generate_social_medias(fname, lname))+"%"+random.choice(clubs)+"%"+str(generate_dummy_classes())+"\n"))
+                        + random.choice(majors)+"%"+str(generate_interests())+"%"+str(generate_social_medias(fname, lname))+"%"+str(generate_clubs())+"%"+str(generate_dummy_classes())+"\n"))
     print("done")
 
 

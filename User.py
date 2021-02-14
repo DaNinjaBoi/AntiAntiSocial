@@ -10,7 +10,10 @@ class User:
         self.passcode = splitline[2]
         self.major = splitline[3]
         self.interests = list(map(isTrue, splitline[4][1:-1].split(", ")))
-        self.club = splitline[6]
+        if len(splitline[6]) > 2:
+            self.club = splitline[6][1:-1].split(", ")
+        else:
+            self.club = []
         self.media = splitline[5][2:-2].split("', '")
         self.classes = list(map(int, splitline[7][1:-2].split(', ')))
 
