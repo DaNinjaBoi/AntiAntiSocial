@@ -48,7 +48,7 @@ def generate_dummy_names():
                "Laurence","Audrey","Camille","Megan","Madison", "Marie","Gabrielle", "Ashley", "Taylor","Kayla","Maude",
                "Vanessa", "Alex", "Nathan","Simon","William","David","Nicolas","Samuel","Gabriel","Kevin","Charles",
                "Antoine","Jordan","Eric","Alexandre","vincent","Adam","Brandon","Ryan","Michael","Ben","Etienne","John",
-               "Ethan"]
+               "Ethan","Karanpal","Oscar","Vansh","Alec"]
 
     last_names = ["Smith","Brown","Tremblay","Martin","Roy","Wilson","Macdonald","Gagnon","Johnson","Taylor","Cote",
               "Campbell","Anderson","Leblanc","Lee","Jones","White","Williams","Miller","Thompson","Gauthier","Young",
@@ -58,7 +58,8 @@ def generate_dummy_names():
               "Wright","Girard","Lewis","Baker","Roberts","Simard","Graham","Caron","Harris","Jackson","Green",
               "Beaulieu","Fraser","Fournier","Kennedy","Hall","Hill","Chan","Wood","Lapointe","Ouellet","Bell","Dube",
               "Allen","Adams","Cloutier","Bennett","Lefebvre","Watson","Robertson","Walsh","Collins","Evans","Hebert",
-              "Hamilton","Cameron","Desjardins","Russell","Nadeau","Cook","Michaud","Morrison","Singh","Grant","Parsons"]
+              "Hamilton","Cameron","Desjardins","Russell","Nadeau","Cook","Michaud","Morrison","Singh","Grant","Parsons",
+              "Sekhon","Ryu","Srivastav","Siala","Zaiane"]
 
     majors = ["Computer Science", "Art","Design","English","poliSci","Math","Biology","Physics","Engineering","Chemistry"]
 
