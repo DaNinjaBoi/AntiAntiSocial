@@ -51,7 +51,7 @@ class User:
         for i in range(len(self.interests)):
             if(self.interests[i]):
                 out.append(interests[i])
-        return ','.join(out)
+        return ', '.join(out)
 
     def print_user(self, type = "normal"):
         if type == "normal":
