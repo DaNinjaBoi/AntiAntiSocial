@@ -57,7 +57,7 @@ def generate_dummy_names():
     first_names = ["Sarah", "Emily", "Emma", "Jessica", "Hannah", "Samantha", "Catherine", "Rachel", "Jade","Amy", "Julia",
                "Laurence","Audrey","Camille","Megan","Madison", "Marie","Gabrielle", "Ashley", "Taylor","Kayla","Maude",
                "Vanessa", "Alex", "Nathan","Simon","William","David","Nicolas","Samuel","Gabriel","Kevin","Charles",
-               "Antoine","Jordan","Eric","Alexandre","vincent","Adam","Brandon","Ryan","Michael","Ben","Etienne","John",
+               "Antoine","Jordan","Eric","Alexandre","Vincent","Adam","Brandon","Ryan","Michael","Ben","Etienne","John",
                "Ethan","Karanpal","Oscar","Vansh","Alec"]
 
     last_names = ["Smith","Brown","Tremblay","Martin","Roy","Wilson","Macdonald","Gagnon","Johnson","Taylor","Cote",
