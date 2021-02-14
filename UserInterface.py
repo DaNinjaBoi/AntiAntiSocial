@@ -360,6 +360,7 @@ class App:
         import random
 
         self.pos = pygame.mouse.get_pos()
+        print(self.pos)
 
         if self.pos[0] > 1710 and self.pos[0] < 1730 and self.pos[1] < 35 and self.pos[1] > 5:
             if self.sidebar_location == "closed":
@@ -454,8 +455,10 @@ class App:
             pfp = pygame.image.load("pfp.png")
             self.screen.blit(pfp, (1670,100))
 
+
         elif self.moved_down2 == True:
             self.sidebar.get_social().draw_content()
+
 
             accounts = []
             for i in range(len(self.user.get_media_account())):
@@ -466,6 +469,8 @@ class App:
                 if accounts[i] != "":
                     self.sidebar.social_media_tab.display_text(accounts[i],(1605, 30*num+190),14)
                     num += 1
+
+
 
         elif self.moved_down3:
             self.sidebar.get_friends().draw_content()
@@ -485,7 +490,7 @@ class App:
                     self.sidebar.suggested_friends_tab.display_text("                 " + ", ".join(interests[2:]),(1615, 80 * i + 277), 9)
 
 
-
+        self.sidebar.social_media_tab.display_text(str(len(accounts)), (1710, 127), 10)
         self.screen.blit(self.scroll, (1903, 0))
 
         # self.sidebar.profile_tab.draw_text()
