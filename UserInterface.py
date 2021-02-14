@@ -25,9 +25,8 @@ class App:
         self.screen = screen
         self.size = size
         self.close_app = False
-
+        self.pos = (0, 0)
         self.background = Background(pygame.image.load("background.JPEG"), self.screen)
-
         self.app_clock = pygame.time.Clock()
         self.FPS = 60
 
@@ -35,6 +34,15 @@ class App:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.close_app = True
+            if event.type == pygame.MOUSEBUTTONUP:
+                self.mouse_up()
+
+    def mouse_up(self):
+
+        self.pos = pygame.mouse.get_pos()
+
+        if self.pos[0] > 1710 and self.pos[0] < 1730 and self.pos[1] < 35 and self.pos[1] > 5:
+            print("ACTIVATED")
 
     def run(self):
 
@@ -51,6 +59,7 @@ class App:
         self.screen.fill((255, 255, 255))
 
         self.background.draw_background()
+
 
         pygame.display.flip()
 
