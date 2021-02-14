@@ -17,7 +17,7 @@ def generate_social_medias(name,lastname):
     # Social Media format: Instagram Snapchat Discord Facebook
     social_medias = ['']*4
     for i in range(len(social_medias)):
-        if random.random() > 0.5:
+        if random.random() < 0.7:
             if i == 0:
                 social_medias[i] = "https://instagram.com/"+name+"."+lastname
             elif i == 1:
