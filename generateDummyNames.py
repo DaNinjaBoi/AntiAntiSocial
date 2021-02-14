@@ -15,7 +15,7 @@ def generate_interests():
 def generate_social_medias(name,lastname):
     import random
     # Social Media format: Instagram Snapchat Discord Facebook
-    social_medias = [False]*4
+    social_medias = ['']*4
     for i in range(len(social_medias)):
         if random.random() > 0.5:
             if i == 0:

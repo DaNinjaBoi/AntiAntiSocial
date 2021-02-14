@@ -1,3 +1,6 @@
+def isTrue(s):
+    return s == 'True'
+
 class User:
 
     def __init__(self, csv):
@@ -6,10 +9,10 @@ class User:
         self.name = splitline[0]
         self.passcode = splitline[2]
         self.major = splitline[3]
-        self.interests = splitline[4]
+        self.interests = list(map(isTrue, splitline[4][1:-1].split(", ")))
         self.club = splitline[6]
-        self.media = splitline[5]
-        self.classes = splitline[7]
+        self.media = splitline[5][2:-2].split("', '")
+        self.classes = list(map(int, splitline[7][1:-2].split(', ')))
 
 
     def get_id(self):
