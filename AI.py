@@ -1,8 +1,5 @@
 import antiantisocial
 import User
-import pandas as pd
-import sklearn
-
 
 def preprocess(user1, user2):
     """
@@ -45,8 +42,6 @@ def preprocess(user1, user2):
     numList.append(commonClasses)
 
     return numList
-
-
 
 
 
