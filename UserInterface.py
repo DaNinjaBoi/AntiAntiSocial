@@ -1,12 +1,29 @@
 
 import pygame
 
-class Dropdown:
+class Sidebar:
 
-    def __init__(self, dimensions, color, position):
-        self.dimensions = dimensions
-        self.color = color
+    def __init__(self, screen, image, position, size, velocity):
         self.position = position
+        self.screen = screen
+        self.image = image
+        self.size = size
+        self.velocity = velocity
+        self.color = (0, 0, 0)
+        self.rect = pygame.Rect(self.position[0], self.position[1], self.size[0], self.size[1])
+
+    def draw_sidebar(self):
+        pygame.draw.rect(self.screen, self.color, self.rect)
+        self.screen.blit(self.image, self.rect)
+
+    def move_sidebar(self, velocity):
+        self.velocity = velocity
+        if self.rect[0] > 1600:
+            self.rect = self.rect.move(self.velocity, 0)
+
+    def return_pos(self):
+        return self.rect[0]
+
 
 
 class Background:
@@ -26,9 +43,32 @@ class App:
         self.size = size
         self.close_app = False
         self.pos = (0, 0)
+        self.sidebar_position = (1920, 52)
+        self.velocity = -25
+
         self.background = Background(pygame.image.load("background.JPEG"), self.screen)
+        self.sidebar = Sidebar(self.screen, pygame.image.load("sidebar.PNG"), self.sidebar_position, (291, 776), self.velocity)
+        self.scroll = pygame.image.load("scroll.png")
+        self.sidebar_location = "right"
+        self.sidebar_move_left = False
+        self.sidebar_move_right = True
+
         self.app_clock = pygame.time.Clock()
         self.FPS = 60
+
+    def update(self):
+        if self.sidebar_moved_left:
+            if self.sidebar.return_pos() > 1640:
+                self.sidebar.move_sidebar(self.velocity)
+            else:
+                self.sidebar_moved_left = True
+                self.sidebar_moved_right = False
+        if self.sidebar_moved_right:
+            if self.sidebar.return_pos() < 1920:
+                self.sidebar.move_sidebar(-self.velocity)
+            else:
+                self.sidebar_moved_right = True
+                self.sidebar_moved_left = False
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -42,7 +82,11 @@ class App:
         self.pos = pygame.mouse.get_pos()
 
         if self.pos[0] > 1710 and self.pos[0] < 1730 and self.pos[1] < 35 and self.pos[1] > 5:
-            print("ACTIVATED")
+            if self.sidebar_location == "right":
+                self.sidebar_move_left = True
+            if self.sidebar_location == "left":
+                self.sidebar_move_right = True
+
 
     def run(self):
 
@@ -60,6 +104,11 @@ class App:
 
         self.background.draw_background()
 
+        self.sidebar.draw_sidebar()
+
+        self.update()
+
+        self.screen.blit(self.scroll, (1903, 0))
 
         pygame.display.flip()
 
