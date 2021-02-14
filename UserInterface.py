@@ -1,3 +1,4 @@
+
 import pygame
 
 class dropdown:
@@ -12,6 +13,36 @@ class background:
 
     def __init__(self, image):
         self.image = image
+
+
+class app:
+
+    def __init__(self, screen, size):
+        self.screen = screen
+        self.size = size
+        self.close_app = False
+
+        self.app_clock = pygame.time.Clock()
+        self.FPS = 60
+
+    def handle_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.close_app = True
+
+    def run(self):
+
+        while not self.close_app:
+
+            self.handle_events()
+
+            self.game_clock.tick(self.FPS)
+
+def main():
+    pygame.init()
+
+
+
 
 
 """
