@@ -395,8 +395,8 @@ class App:
 
         if self.moved_down == True:
             self.sidebar.profile_tab.draw_content()
-            self.sidebar.profile_tab.display_text("Name: " + self.user.get_name(), (1605,260),17)
-            self.sidebar.profile_tab.display_text("Major: " + self.user.get_major(), (1605, 290),17)
+            self.sidebar.profile_tab.display_text("{:<10s}".format("Name:") + self.user.get_name(), (1605,260),17)
+            self.sidebar.profile_tab.display_text("{:<10s}".format("Major:"") + self.user.get_major(), (1605, 290),17)
 
             interests = ["Outdoor Sports", "Gaming", "Coding", "Drawing/Painting", "Writing", "Reading", "Travelling",
                          "Music",
