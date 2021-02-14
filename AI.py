@@ -1,10 +1,9 @@
 import antiantisocial
 import User
-import sklearn as sk
 import pandas as pd
-from sklearn import preprocessing
-import statsmodels.api as sm
+import pickle
 from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
 
 
 def preprocess(user1, user2):
@@ -70,21 +69,39 @@ def create_training_csv():
 
 class AAS_AI():
     def __init__(self):
-        pass
+        self.logreg = []
 
     def load_from_file_and_train(self):
         data = pd.read_csv('training.csv', header=None)
-        x_train, x_test, y_train, y_test = train_test_split()
-        logit_model = sm.Logit()
+        targets = pd.read_csv('training_targets.csv', header=None)
+        targets = targets.values.ravel()
+        print(targets.shape)
+        x_train, x_test, y_train, y_test = train_test_split(data, targets, test_size=0.25, )
+        self.logreg = LogisticRegression()
+        self.logreg.fit(x_train,y_train)
+        y_pred = self.logreg.predict(x_test)
+        print('Accuracy: {:.5f}'.format(self.logreg.score(x_test, y_test)))
+        from sklearn.metrics import confusion_matrix
+        confusion_matrix = confusion_matrix(y_test, y_pred)
+        print(confusion_matrix)
+        from sklearn.metrics import roc_auc_score
+        score = roc_auc_score(y_test, self.logreg.predict(x_test))
+        print("ROC score area is {:.5f}".format(score))
+        print("Would you like to save? (y/n): ")
+        if input() == 'y':
+            self.save_to_file()
 
     def save_to_file(self):
-        pass
+        with open('saved_model', 'wb') as f:
+            pickle.dump(self.logreg, f)
 
-    def initial_setup(self):
-        pass
+    def load_from_file(self):
+        with open('saved_model', 'rb') as f:
+            self.logreg = pickle.load(f)
+
 
     def classify(self):
-        pass
+        return
 
     def train(self):
         pass
