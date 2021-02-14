@@ -395,8 +395,8 @@ class App:
 
         if self.moved_down == True:
             self.sidebar.profile_tab.draw_content()
-            self.sidebar.profile_tab.display_text("{:<10s}".format("Name:") + self.user.get_name(), (1605,260),17)
-            self.sidebar.profile_tab.display_text("{:<10s}".format("Major:"") + self.user.get_major(), (1605, 290),17)
+            self.sidebar.profile_tab.display_text("Name: " + self.user.get_name(), (1605,260),17)
+            self.sidebar.profile_tab.display_text("Major: " + self.user.get_major(), (1605, 290),17)
 
             interests = ["Outdoor Sports", "Gaming", "Coding", "Drawing/Painting", "Writing", "Reading", "Travelling",
                          "Music",
@@ -409,7 +409,10 @@ class App:
 
             self.sidebar.profile_tab.display_text("Interests: ", (1605,320), 17)
             for i in range(len(users_interests)):
-                self.sidebar.profile_tab.display_text(users_interests[i], (1690, 30*i+320), 17)
+                self.sidebar.profile_tab.display_text(users_interests[i], (1700, 30*i+320), 17)
+
+            pfp = pygame.image.load("pfp.png")
+            self.screen.blit(pfp, (1650,50))
 
         elif self.moved_down2 == True:
             self.sidebar.get_social().draw_content()
