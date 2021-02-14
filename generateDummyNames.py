@@ -1,3 +1,46 @@
+
+interests = ["Outdoor Sports", "Gaming", "Coding", "Drawing/Painting", "Writing","Reading", "Travelling", "Music",
+                 "Indoor Sports", "Arts and Crafts", "Action Movies", "Romance Movies", "Exercising", "Cooking",
+                 "photography", "Watching Theatre"]
+
+
+def generate_interests():
+    import random
+    bool_interests = [False]*len(interests)
+    for i in range(random.randint(0,4)):
+        bool_interests[random.randint(0,len(interests)-1)] = True
+    return bool_interests
+
+
+def generate_social_medias(name,lastname):
+    import random
+    # Social Media format: Instagram Snapchat Discord Facebook
+    social_medias = [False]*4
+    for i in range(len(social_medias)):
+        if random.random() > 0.5:
+            if i == 0:
+                social_medias[i] = "https://instagram.com/"+name+"."+lastname
+            elif i == 1:
+                social_medias[i] = name+lastname+str(random.randint(0, 1000))
+            elif i == 2:
+                social_medias[i] = name+lastname+"#"+str(random.randint(1000,9999))
+            elif i == 3:
+                social_medias[i] = "https://facebook.com/"+name+lastname
+    return social_medias
+
+
+def generate_dummy_classes():
+    import random
+    classes = []
+    for i in range(random.randint(1,5)):
+        j = random.randint(100, 999)
+        if j not in classes:
+            classes.append(j)
+        else:
+            i -= 1
+    return classes
+
+
 def generate_dummy_names():
     import random
 
@@ -17,26 +60,17 @@ def generate_dummy_names():
               "Allen","Adams","Cloutier","Bennett","Lefebvre","Watson","Robertson","Walsh","Collins","Evans","Hebert",
               "Hamilton","Cameron","Desjardins","Russell","Nadeau","Cook","Michaud","Morrison","Singh","Grant","Parsons"]
 
-    faculties = ["Computer Science", "Art","Design","English","poliSci","Math","Biology","Physics","Engineering","Chemistry"]
-
-    interests = ["Outdoor Sports", "Gaming", "Coding", "Drawing/Painting", "Writing","Reading", "Travelling", "Music",
-                 "Indoor Sports", "Arts and Crafts", "Action Movies", "Romance Movies", "Exercising", "Cooking",
-                 "photography", "Watching Theatre"]
-
+    majors = ["Computer Science", "Art","Design","English","poliSci","Math","Biology","Physics","Engineering","Chemistry"]
 
     clubs = ["Club 1", "Club 2","Club 3","Club 4"]
-
-
-
+    print("Generating Dummy Users")
     with open("DummyNames.csv", "w") as f:
-        pwstring = "abcdefghizklmnopqrstuvwxyz"
         # f.truncate(0)  # clear previous contents
         for i in range(5000):
             fname = random.choice(first_names)
             lname = random.choice(last_names)
-            f.write(str(fname+" "+lname+","+str(123000+i)+","+ "test_password" +","
-                        +random.choice(faculties)+","+random.choice(interests)+","+"https://instagram.com/"+
-                        fname+lname+","+random.choice(clubs)+","+"Dummy Class ID\n"))
+            f.write(str(fname+" "+lname+"%"+str(123000+i)+"%"+ "test_password" +"%"
+                        + random.choice(majors)+"%"+str(generate_interests())+"%"+str(generate_social_medias(fname, lname))+"%"+random.choice(clubs)+"%"+str(generate_dummy_classes())+"\n"))
     print("done")
 
 

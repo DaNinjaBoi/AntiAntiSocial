@@ -1,7 +1,7 @@
 class User:
 
     def __init__(self, csv):
-        splitline = csv.split(",")
+        splitline = csv.split("%")
         self.id = splitline[1]
         self.name = splitline[0]
         self.passcode = splitline[2]

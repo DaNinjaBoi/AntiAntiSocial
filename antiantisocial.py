@@ -1,3 +1,5 @@
+import generateDummyNames
+
 
 def importDummyNames():
     from User import User
@@ -10,6 +12,7 @@ def importDummyNames():
 
 
 if __name__ == "__main__":
+    # generateDummyNames.generate_dummy_names()
     students = importDummyNames()
 
 
