@@ -15,12 +15,17 @@ class Background:
         self.image = image
 
 
+
+
 class App:
 
     def __init__(self, screen, size):
         self.screen = screen
         self.size = size
         self.close_app = False
+
+
+        self.background = pygame.image.load("")
 
         self.app_clock = pygame.time.Clock()
         self.FPS = 60
@@ -37,6 +42,12 @@ class App:
             self.handle_events()
 
             self.app_clock.tick(self.FPS)
+
+    def draw(self):
+
+
+
+        pygame.display.flip()
 
 def main():
 
