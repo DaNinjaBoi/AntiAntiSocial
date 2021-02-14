@@ -120,6 +120,7 @@ class AAS_AI():
         output = []
         for m in k_best_matches:
             output.append(m[1])
+        return output
 
 
 
