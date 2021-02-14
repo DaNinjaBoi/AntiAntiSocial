@@ -1,10 +1,11 @@
-
+import AI
+import AAS_IO
 import pygame
 
 
 class Profile:
 
-    def __init__(self, screen, image, content, position, velocity, size1, size2):
+    def __init__(self, screen, image, content, profile_name, profile_interests, profile_major,position, velocity, size1, size2, text_color, text_string, text_font, text_position):
         self.screen = screen
         self.image = image
         self.position = position
@@ -15,6 +16,15 @@ class Profile:
         self.rect = pygame.Rect(self.position[0], self.position[1], 319, 36)
         self.content_rect = pygame.Rect(self.position[0], self.position[1]-333, size1, size2)
         self.drop_down = False
+        self.text_color = text_color
+        self.text_string = text_string
+        self.text_font = text_font
+        self.text_image = self.text_font.render(self.text_string, True, self.text_color)
+        self.text_position = text_position
+        self.profile_name = profile_name
+        self.profile_interests = profile_interests
+        self.profile_major = profile_major
+
 
     def draw_profile(self):
         pygame.draw.rect(self.screen, (0, 0, 0), self.rect)
@@ -30,6 +40,18 @@ class Profile:
 
     def draw_content(self):
         pygame.draw.rect(self.screen, (255, 255, 255), pygame.Rect(1600, 94, 319, 370))
+
+
+    def display_text(self, output, pos, text_size):
+        text_color = pygame.Color("Black")
+        text_font = pygame.font.SysFont("Verdana", text_size)
+        text_image = text_font.render(output, True, text_color)
+        self.screen.blit(text_image, pos)
+
+
+
+    def draw_text(self):
+        self.screen.blit(self.text_image, self.text_position)
 
     def shape_shift(self, number):
         self.size2 = self.size2+number
@@ -77,6 +99,13 @@ class SocialMedia:
     def draw_content(self):
         pygame.draw.rect(self.screen, (255, 255, 255), pygame.Rect(1600, 149, 319, 240))
 
+    def display_text(self, output, pos, text_size):
+        text_color = pygame.Color("Black")
+        text_font = pygame.font.SysFont("Verdana", text_size)
+        text_image = text_font.render(output, True, text_color)
+        self.screen.blit(text_image, pos)
+
+
     def get_rect(self):
         return self.rect
 
@@ -118,6 +147,12 @@ class SuggestedFriends:
         self.velocity = velocity
         self.rect = self.rect.move(0, -self.velocity)
 
+    def display_text(self, output, pos, text_size):
+        text_color = pygame.Color("Black")
+        text_font = pygame.font.SysFont("Verdana", text_size)
+        text_image = text_font.render(output, True, text_color)
+        self.screen.blit(text_image, pos)
+
     def draw_content(self):
         pygame.draw.rect(self.screen, (255, 255, 255), pygame.Rect(1600, 205, 319, 600))
 
@@ -136,15 +171,19 @@ class SuggestedFriends:
 
 class Sidebar:
 
-    def __init__(self, screen, image, position, size, velocity):
+    def __init__(self, screen, image, position, size, velocity, student):
         self.position = position
         self.screen = screen
         self.image = image
         self.size = size
+        self.student = student
         self.velocity = velocity
         self.color = (0, 0, 0)
-        self.profile_tab = Profile(self.screen, pygame.image.load("profileWithTriangle.png"), pygame.image.load("profileSpace.png"), (1925, 55), 10, 319, 0)
+        self.profile_tab = Profile(self.screen, pygame.image.load("profileWithTriangle.png"), pygame.image.load("profileSpace.png"), self.student.get_name, self.student.get_interests(), self.student.get_major(), (1925, 55), 10, 319, 0, pygame.Color("white"), self.student.get_name(),
+                                   pygame.font.SysFont('DINPro', 21), (1741, 15))
+
         self.social_media_tab = SocialMedia(self.screen, pygame.image.load("socialMediaWithTriangle.png"), "", (1925, 111), 10)
+
         self.suggested_friends_tab = SuggestedFriends(self.screen, pygame.image.load("suggestedfriendstrianglenormal.png"), "", (1925, 167), 10)
         self.rect = pygame.Rect(self.position[0], self.position[1], self.size[0], self.size[1])
         self.drop_cases_list = []
@@ -226,16 +265,20 @@ class Background:
 
 class App:
 
-    def __init__(self, screen, size):
+    def __init__(self, screen, size, students, ai):
         self.screen = screen
         self.size = size
+        self.students = students
+        self.ai = ai
+        self.user_index = 2101
+        self.user = students[2101]
         self.close_app = False
         self.pos = (0, 0)
         self.sidebar_position = (1920, 52)
         self.velocity = -25
 
         self.background = Background(pygame.image.load("background.JPEG"), self.screen)
-        self.sidebar = Sidebar(self.screen, pygame.image.load("sidebarAllGray.png"), self.sidebar_position, (291, 776), self.velocity)
+        self.sidebar = Sidebar(self.screen, pygame.image.load("sidebarAllGray.png"), self.sidebar_position, (291, 776), self.velocity, self.user)
         self.scroll = pygame.image.load("scroll.png")
         self.sidebar_location = "closed"
         self.sidebar_move_left = False
@@ -274,6 +317,7 @@ class App:
                 self.move_down_1 = False
                 self.moved_down = True
 
+
         if self.move_up_1 == True:
             if self.sidebar.get_social().get_rect()[1] > 111:
                 self.sidebar.move_up_bar(1)
@@ -292,7 +336,6 @@ class App:
                 self.sidebar.move_up_bar(2)
             else:
                  self.move_up_2 = False
-
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -344,10 +387,6 @@ class App:
 
         self.sidebar.calculate_case()
 
-
-
-
-
     def run(self):
 
         while not self.close_app:
@@ -370,26 +409,70 @@ class App:
 
         if self.moved_down == True:
             self.sidebar.profile_tab.draw_content()
+            self.sidebar.profile_tab.display_text("Name: " + self.user.get_name(), (1605,260),17)
+            self.sidebar.profile_tab.display_text("Major: " + self.user.get_major(), (1605, 290),17)
+
+            interests = ["Outdoor Sports", "Gaming", "Coding", "Drawing/Painting", "Writing", "Reading", "Travelling",
+                         "Music",
+                         "Indoor Sports", "Arts and Crafts", "Action Movies", "Romance Movies", "Exercising", "Cooking",
+                         "photography", "Watching Theatre"]
+            users_interests = []
+            for i in range(len(self.user.get_interests())):
+                if self.user.get_interests()[i]:
+                    users_interests.append(interests[i])
+
+            self.sidebar.profile_tab.display_text("Interests: ", (1605,320), 17)
+            for i in range(len(users_interests)):
+                self.sidebar.profile_tab.display_text(users_interests[i], (1700, 30*i+320), 17)
+
+            pfp = pygame.image.load("pfp.png")
+            self.screen.blit(pfp, (1670,100))
+
         elif self.moved_down2 == True:
             self.sidebar.get_social().draw_content()
+
+            accounts = []
+            for i in range(len(self.user.get_media_account())):
+                accounts.append(self.user.get_media_account()[i])
+            self.sidebar.social_media_tab.display_text("Social Media: ", (1605,160), 17)
+            num = 0
+            for i in range(len(accounts)):
+                if accounts[i] != "":
+                    self.sidebar.social_media_tab.display_text(accounts[i],(1605, 30*num+190),14)
+                    num += 1
+
         elif self.moved_down3 == True:
             self.sidebar.get_friends().draw_content()
+            # find common users
+            # self.ai.find_best_matches(self.students,self.s)
+
+
+            # self.sidebar.suggested_friends_tab.display_text()
+
+
+
 
         self.screen.blit(self.scroll, (1903, 0))
+
+        self.sidebar.profile_tab.draw_text()
+
 
         pygame.display.flip()
 
 
 def main():
 
+    students = AAS_IO.importDummyNames()
+    ai = AI.AAS_AI()
+    ai.load_from_file()
+
     pygame.init()
 
     size = (1920, 910)
     screen = pygame.display.set_mode(size)
 
+    app = App(screen, size, students, ai)
     pygame.display.set_caption("Anti-Anti Social")
-
-    app = App(screen, size)
 
     app.run()
 
