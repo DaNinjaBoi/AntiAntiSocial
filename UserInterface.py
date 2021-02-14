@@ -1,6 +1,105 @@
 
 import pygame
 
+
+class Profile:
+
+    def __init__(self, screen, image, content, position, velocity):
+        self.screen = screen
+        self.image = image
+        self.position = position
+        self.content = content
+        self.velocity = velocity
+        self.rect = pygame.Rect(self.position[0], self.position[1], 319, 36)
+        self.drop_down = False
+
+    def draw_profile(self):
+        pygame.draw.rect(self.screen, (0, 0, 0), self.rect)
+        self.screen.blit(self.image, self.rect)
+
+    def move_profile(self, velocity):
+        self.velocity = velocity
+        self.rect = self.rect.move(self.velocity, 0)
+
+    def get_rect(self):
+        return self.rect
+
+    def set_image(self, image):
+        self.image = image
+
+    def get_drop_down(self):
+        return self.drop_down
+
+    def switch_drop_down(self):
+        self.drop_down = not self.drop_down
+
+
+class SocialMedia:
+
+    def __init__(self, screen, image, content, position, velocity):
+        self.screen = screen
+        self.image = image
+        self.content = content
+        self.position = position
+        self.velocity = velocity
+        self.rect = pygame.Rect(self.position[0], self.position[1], 319, 36)
+        self.drop_down = False
+
+    def draw_social_media(self):
+        pygame.draw.rect(self.screen, (0, 0, 0), self.rect)
+        self.screen.blit(self.image, self.rect)
+
+    def move_social_media(self, velocity):
+        self.velocity = velocity
+        self.rect = self.rect.move(self.velocity, 0)
+
+    def get_rect(self):
+        return self.rect
+
+    def set_image(self, image):
+        self.image = image
+
+    def get_drop_down(self):
+        return self.drop_down
+
+    def switch_drop_down(self):
+        self.drop_down = not self.drop_down
+
+
+
+
+class SuggestedFriends:
+
+    def __init__(self, screen, image, content, position, velocity):
+        self.screen = screen
+        self.image = image
+        self.content = content
+        self.position = position
+        self.velocity = velocity
+        self.rect = pygame.Rect(self.position[0], self.position[1], 319, 36)
+        self.drop_down = False
+
+    def draw_friends(self):
+        pygame.draw.rect(self.screen, (0, 0, 0), self.rect)
+        self.screen.blit(self.image, self.rect)
+
+    def move_friends(self, velocity):
+        self.velocity = velocity
+        self.rect = self.rect.move(self.velocity, 0)
+
+    def get_rect(self):
+        return self.rect
+
+    def set_image(self, image):
+        self.image = image
+
+    def get_drop_down(self):
+        return self.drop_down
+
+    def switch_drop_down(self):
+        self.drop_down = not self.drop_down
+
+
 class Sidebar:
 
     def __init__(self, screen, image, position, size, velocity):
@@ -10,19 +109,37 @@ class Sidebar:
         self.size = size
         self.velocity = velocity
         self.color = (0, 0, 0)
+        self.profile_tab = Profile(self.screen, pygame.image.load("profileWithTriangle.png"), "", (1925, 55), 10)
+        self.social_media_tab = SocialMedia(self.screen, pygame.image.load("socialMediaWithTriangle.png"), "", (1925, 111), 10)
+        self.suggested_friends_tab = SuggestedFriends(self.screen, pygame.image.load("suggestedfriendsWithTriangle.png"), "", (1925, 167), 10)
         self.rect = pygame.Rect(self.position[0], self.position[1], self.size[0], self.size[1])
 
     def draw_sidebar(self):
         pygame.draw.rect(self.screen, self.color, self.rect)
         self.screen.blit(self.image, self.rect)
+        self.profile_tab.draw_profile()
+        self.social_media_tab.draw_social_media()
+        self.suggested_friends_tab.draw_friends()
 
     def move_sidebar(self, velocity):
         self.velocity = velocity
-        if self.rect[0] > 1600:
-            self.rect = self.rect.move(self.velocity, 0)
+        self.rect = self.rect.move(self.velocity, 0)
+        self.profile_tab.move_profile(self.velocity)
+        self.social_media_tab.move_social_media(self.velocity)
+        self.suggested_friends_tab.move_friends(self.velocity)
+
 
     def return_pos(self):
         return self.rect[0]
+
+    def get_profile(self):
+        return self.profile_tab
+
+    def get_social(self):
+        return self.social_media_tab
+
+    def get_friends(self):
+        return self.suggested_friends_tab
 
 
 class Background:
@@ -46,9 +163,9 @@ class App:
         self.velocity = -25
 
         self.background = Background(pygame.image.load("background.JPEG"), self.screen)
-        self.sidebar = Sidebar(self.screen, pygame.image.load("sidebar.PNG"), self.sidebar_position, (291, 776), self.velocity)
+        self.sidebar = Sidebar(self.screen, pygame.image.load("sidebarAllGray.png"), self.sidebar_position, (291, 776), self.velocity)
         self.scroll = pygame.image.load("scroll.png")
-        self.sidebar_location = "right"
+        self.sidebar_location = "closed"
         self.sidebar_move_left = False
         self.sidebar_move_right = False
 
@@ -57,17 +174,17 @@ class App:
 
     def update(self):
         if self.sidebar_move_left:
-            if self.sidebar.return_pos() > 1640:
+            if self.sidebar.return_pos() > 1600:
                 self.sidebar.move_sidebar(self.velocity)
             else:
                 self.sidebar_move_left = False
-                self.sidebar_location = "left"
+                self.sidebar_location = "open"
         if self.sidebar_move_right:
             if self.sidebar.return_pos() < 1920:
                 self.sidebar.move_sidebar(-self.velocity)
             else:
                 self.sidebar_move_right = False
-                self.sidebar_location = "right"
+                self.sidebar_location = "closed"
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -81,10 +198,30 @@ class App:
         self.pos = pygame.mouse.get_pos()
 
         if self.pos[0] > 1710 and self.pos[0] < 1730 and self.pos[1] < 35 and self.pos[1] > 5:
-            if self.sidebar_location == "right":
+            if self.sidebar_location == "closed":
                 self.sidebar_move_left = True
-            if self.sidebar_location == "left":
+            if self.sidebar_location == "open":
                 self.sidebar_move_right = True
+
+        if self.sidebar.get_profile().get_rect().collidepoint(self.pos) and not self.sidebar.get_profile().get_drop_down():
+            self.sidebar.get_profile().set_image(pygame.image.load("profile.png"))
+            self.sidebar.get_profile().switch_drop_down()
+        elif self.sidebar.get_profile().get_rect().collidepoint(self.pos) and self.sidebar.get_profile().get_drop_down():
+            self.sidebar.get_profile().set_image(pygame.image.load("profileWithTriangle.png"))
+            self.sidebar.get_profile().switch_drop_down()
+        if self.sidebar.get_social().get_rect().collidepoint(self.pos) and not self.sidebar.get_social().get_drop_down():
+            self.sidebar.get_social().set_image(pygame.image.load("socialmedia.png"))
+            self.sidebar.get_social().switch_drop_down()
+        elif self.sidebar.get_social().get_rect().collidepoint(self.pos) and self.sidebar.get_social().get_drop_down():
+            self.sidebar.get_social().set_image(pygame.image.load("socialMediaWithTriangle.png"))
+            self.sidebar.get_social().switch_drop_down()
+        if self.sidebar.get_friends().get_rect().collidepoint(self.pos) and not self.sidebar.get_friends().get_drop_down():
+            self.sidebar.get_friends().set_image(pygame.image.load("suggestedfriends.png"))
+            self.sidebar.get_friends().switch_drop_down()
+        elif self.sidebar.get_friends().get_rect().collidepoint(self.pos) and self.sidebar.get_friends().get_drop_down():
+            self.sidebar.get_friends().set_image(pygame.image.load("suggestedfriendsWithTriangle.png"))
+            self.sidebar.get_friends().switch_drop_down()
+
 
     def run(self):
 
