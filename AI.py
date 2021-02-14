@@ -101,7 +101,24 @@ class AAS_AI():
             self.logreg = pickle.load(f)
 
     def classify(self, user1, user2):
-        return self.logreg.predict_proba(np.array(preprocess(user1,user2)).reshape(1,-1))
+        return self.logreg.decision_function(np.array(preprocess(user1, user2)).reshape(1,-1))
+
+    def find_best_matches(self,userList, userIndex, k):
+        '''
+        Gives k best predictions from userList for the user at userIndex
+        :param userList: list of user objects
+        :param userIndex: index of target user in userList
+        :return: list of k top users
+        '''
+
+        k_best_matches = []
+        for user in userList:
+            if user != userList[userIndex]:
+                k_best_matches.append([self.classify(userList[userIndex], user), user.get_id()])
+        k_best_matches.sort(key=lambda arr: arr[0], reverse=True)
+        return k_best_matches[:k]
+
+
 
     def train(self):
         pass
