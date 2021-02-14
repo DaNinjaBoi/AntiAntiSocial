@@ -42,6 +42,17 @@ class User:
     def find_mutual_friends(self):
         pass
 
+    def get_string_interests(self):
+        interests = ["Outdoor Sports", "Gaming", "Coding", "Drawing/Painting", "Writing", "Reading", "Travelling",
+                     "Music",
+                     "Indoor Sports", "Arts and Crafts", "Action Movies", "Romance Movies", "Exercising", "Cooking",
+                     "photography", "Watching Theatre"]
+        out = []
+        for i in range(len(self.interests)):
+            if(self.interests[i]):
+                out.append(interests[i])
+        return ','.join(out)
+
     def print_user(self, type = "normal"):
         if type == "normal":
             print(self.name)
