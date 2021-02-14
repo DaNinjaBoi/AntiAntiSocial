@@ -1,8 +1,10 @@
 import antiantisocial
 import User
-#import sklearn as sk
-#import pandas as pd
-#from sklearn import preprocessing
+import sklearn as sk
+import pandas as pd
+from sklearn import preprocessing
+import statsmodels.api as sm
+from sklearn.model_selection import train_test_split
 
 
 def preprocess(user1, user2):
@@ -53,21 +55,27 @@ def create_training_csv():
     users = importDummyNames()
     with open("manual_training.csv", 'r') as f:
         with open("training.csv", "w") as g:
-            print("Opened")
-            for line in f.readlines():
-                data = line.split(",")
-                towrite = preprocess(users[int(data[0])], users[int(data[1])])
-                for element in towrite:
-                    g.write(str(element)+',')
-                g.write(data[2])
+            with open("training_targets.csv", "w") as h:
+                print("Opened")
+                for line in f.readlines():
+                    data = line.split(",")
+                    towrite = preprocess(users[int(data[0])], users[int(data[1])])
+                    for index in range(len(towrite)):
+                        g.write(str(towrite[index]))
+                        if index < len(towrite)-1:
+                            g.write(",")
+                    g.write("\n")
+                    h.write(data[2])
 
 
 class AAS_AI():
     def __init__(self):
         pass
 
-    def load_from_file(self):
-        pass
+    def load_from_file_and_train(self):
+        data = pd.read_csv('training.csv', header=None)
+        x_train, x_test, y_train, y_test = train_test_split()
+        logit_model = sm.Logit()
 
     def save_to_file(self):
         pass
