@@ -263,6 +263,21 @@ class Background:
         self.screen.blit(self.image, (0, 0))
 
 
+class Button:
+
+    def __init__(self, screen, position, size):
+        self.screen = screen
+        self.position = position
+        self.size = size
+        self.rect = pygame.Rect(self.position[0], self.position[1], self.size[0], self.size[1])
+
+    def draw_button(self):
+        pygame.draw.rect(self.screen, pygame.Color("Green"), self.rect)
+
+    def get_rect(self):
+        return self.rect
+
+
 class App:
 
     def __init__(self, screen, size, students, ai):
@@ -271,12 +286,12 @@ class App:
         self.students = students
         self.ai = ai
         self.user_index = 2101
-        self.user = students[2101]
+        self.user = students[self.user_index]
         self.close_app = False
         self.pos = (0, 0)
         self.sidebar_position = (1920, 52)
         self.velocity = -25
-
+        self.button = Button(self.screen, (1670,100), (150,150))
         self.background = Background(pygame.image.load("background.JPEG"), self.screen)
         self.sidebar = Sidebar(self.screen, pygame.image.load("sidebarAllGray.png"), self.sidebar_position, (291, 776), self.velocity, self.user)
         self.scroll = pygame.image.load("scroll.png")
@@ -345,6 +360,7 @@ class App:
                 self.mouse_up()
 
     def mouse_up(self):
+        import random
 
         self.pos = pygame.mouse.get_pos()
 
@@ -385,7 +401,15 @@ class App:
             self.sidebar.get_friends().switch_drop_down()
             self.sidebar.set_case_type()
 
+        if self.button.get_rect().collidepoint(self.pos):
+            print(15)
+            self.user_index = random.randint(0,4999)
+            self.user = self.students[self.user_index]
+
+
         self.sidebar.calculate_case()
+
+
 
     def run(self):
 
@@ -441,14 +465,22 @@ class App:
                     self.sidebar.social_media_tab.display_text(accounts[i],(1605, 30*num+190),14)
                     num += 1
 
-        elif self.moved_down3 == True:
+        elif self.moved_down3:
             self.sidebar.get_friends().draw_content()
             # find common users
-            # self.ai.find_best_matches(self.students,self.s)
-
-
-            # self.sidebar.suggested_friends_tab.display_text()
-
+            list_of_studes = self.ai.find_best_matches(self.students,self.user_index,7)
+            small_pfp = pygame.image.load("smallpfp.png")
+            for i in range(len(list_of_studes)):
+                self.screen.blit(small_pfp,(1615, 80*i+225))
+                self.sidebar.suggested_friends_tab.display_text(self.students[list_of_studes[i]].get_name(), (1655, 80*i+225), 12)
+                self.sidebar.suggested_friends_tab.display_text("Major: " + self.students[list_of_studes[i]].get_major(), (1655, 80*i+240), 10)
+                interests = self.students[list_of_studes[i]].get_string_interests()
+                if len(interests) < 40:
+                    self.sidebar.suggested_friends_tab.display_text("Interests: " + interests, (1615, 80*i+265), 9)
+                else:
+                    interests = interests.split(", ")
+                    self.sidebar.suggested_friends_tab.display_text("Interests: " + ", ".join(interests[0:2]), (1615, 80 * i + 265), 9)
+                    self.sidebar.suggested_friends_tab.display_text("                 " + ", ".join(interests[2:]),(1615, 80 * i + 277), 9)
 
 
 
@@ -477,7 +509,4 @@ def main():
     app.run()
 
 
-
-
 main()
-
