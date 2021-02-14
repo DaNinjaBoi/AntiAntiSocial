@@ -99,6 +99,13 @@ class SocialMedia:
     def draw_content(self):
         pygame.draw.rect(self.screen, (255, 255, 255), pygame.Rect(1600, 149, 319, 240))
 
+    def display_text(self, output, pos, text_size):
+        text_color = pygame.Color("Black")
+        text_font = pygame.font.SysFont("Verdana", text_size)
+        text_image = text_font.render(output, True, text_color)
+        self.screen.blit(text_image, pos)
+
+
     def get_rect(self):
         return self.rect
 
@@ -139,6 +146,12 @@ class SuggestedFriends:
     def move_up(self, velocity):
         self.velocity = velocity
         self.rect = self.rect.move(0, -self.velocity)
+
+    def display_text(self, output, pos, text_size):
+        text_color = pygame.Color("Black")
+        text_font = pygame.font.SysFont("Verdana", text_size)
+        text_image = text_font.render(output, True, text_color)
+        self.screen.blit(text_image, pos)
 
     def draw_content(self):
         pygame.draw.rect(self.screen, (255, 255, 255), pygame.Rect(1600, 205, 319, 600))
@@ -257,6 +270,7 @@ class App:
         self.size = size
         self.students = students
         self.ai = ai
+        self.user_index = 2101
         self.user = students[2101]
         self.close_app = False
         self.pos = (0, 0)
@@ -412,12 +426,31 @@ class App:
                 self.sidebar.profile_tab.display_text(users_interests[i], (1700, 30*i+320), 17)
 
             pfp = pygame.image.load("pfp.png")
-            self.screen.blit(pfp, (1650,50))
+            self.screen.blit(pfp, (1670,100))
 
         elif self.moved_down2 == True:
             self.sidebar.get_social().draw_content()
+
+            accounts = []
+            for i in range(len(self.user.get_media_account())):
+                accounts.append(self.user.get_media_account()[i])
+            self.sidebar.social_media_tab.display_text("Social Media: ", (1605,160), 17)
+            num = 0
+            for i in range(len(accounts)):
+                if accounts[i] != "":
+                    self.sidebar.social_media_tab.display_text(accounts[i],(1605, 30*num+190),14)
+                    num += 1
+
         elif self.moved_down3 == True:
             self.sidebar.get_friends().draw_content()
+            # find common users
+            # self.ai.find_best_matches(self.students,self.s)
+
+
+            # self.sidebar.suggested_friends_tab.display_text()
+
+
+
 
         self.screen.blit(self.scroll, (1903, 0))
 
