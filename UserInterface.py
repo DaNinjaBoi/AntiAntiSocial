@@ -11,10 +11,12 @@ class Dropdown:
 
 class Background:
 
-    def __init__(self, image):
+    def __init__(self, image, screen):
         self.image = image
+        self.screen = screen
 
-
+    def draw_background(self):
+        self.screen.blit(self.image, (0, 0))
 
 
 class App:
@@ -24,8 +26,7 @@ class App:
         self.size = size
         self.close_app = False
 
-
-        self.background = pygame.image.load("")
+        self.background = Background(pygame.image.load("background.JPEG"), self.screen)
 
         self.app_clock = pygame.time.Clock()
         self.FPS = 60
@@ -43,17 +44,22 @@ class App:
 
             self.app_clock.tick(self.FPS)
 
+            self.draw()
+
     def draw(self):
 
+        self.screen.fill((255, 255, 255))
 
+        self.background.draw_background()
 
         pygame.display.flip()
+
 
 def main():
 
     pygame.init()
 
-    size = (1920, 1080)
+    size = (1920, 910)
     screen = pygame.display.set_mode(size)
 
     pygame.display.set_caption("Anti-Anti Social")
