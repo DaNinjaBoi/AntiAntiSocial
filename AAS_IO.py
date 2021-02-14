@@ -54,4 +54,3 @@ def merge_csv():
     print(total)
 
 
-merge_csv()

@@ -1,5 +1,9 @@
 import antiantisocial
 import User
+#import sklearn as sk
+#import pandas as pd
+#from sklearn import preprocessing
+
 
 def preprocess(user1, user2):
     """
@@ -44,4 +48,36 @@ def preprocess(user1, user2):
     return numList
 
 
+def create_training_csv():
+    from AAS_IO import importDummyNames
+    users = importDummyNames()
+    with open("manual_training.csv", 'r') as f:
+        with open("training.csv", "w") as g:
+            print("Opened")
+            for line in f.readlines():
+                data = line.split(",")
+                towrite = preprocess(users[int(data[0])], users[int(data[1])])
+                for element in towrite:
+                    g.write(str(element)+',')
+                g.write(data[2])
+
+
+class AAS_AI():
+    def __init__(self):
+        pass
+
+    def load_from_file(self):
+        pass
+
+    def save_to_file(self):
+        pass
+
+    def initial_setup(self):
+        pass
+
+    def classify(self):
+        pass
+
+    def train(self):
+        pass
 
