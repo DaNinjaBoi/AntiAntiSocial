@@ -25,7 +25,6 @@ class Sidebar:
         return self.rect[0]
 
 
-
 class Background:
 
     def __init__(self, image, screen):
@@ -81,13 +80,11 @@ class App:
 
         self.pos = pygame.mouse.get_pos()
 
-
         if self.pos[0] > 1710 and self.pos[0] < 1730 and self.pos[1] < 35 and self.pos[1] > 5:
             if self.sidebar_location == "right":
                 self.sidebar_move_left = True
             if self.sidebar_location == "left":
                 self.sidebar_move_right = True
-
 
     def run(self):
 
@@ -132,17 +129,3 @@ def main():
 
 main()
 
-
-
-
-
-"""
-1. initial click sidebar appears
-
-2. when sidebar appears all of the dropdowns should be hidden
-
-3. when clicked onto the dropdowns, they should be opened up and animated the dropdown.
-
-4. now we need to make sure that clicking a specific dropdown will hide all of the other ones
-
-"""
