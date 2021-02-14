@@ -10,7 +10,7 @@ interests = ["Outdoor Sports", "Gaming", "Coding", "Drawing/Painting", "Writing"
 
 def manual_train():
     import random
-    with open("manual_training.csv", "a") as f:
+    with open("manual_training_Karanpal.csv", "a") as f:
         for i in range(5000):
             student1idx = random.randrange(0, len(students))
             student2idx = random.randrange(0, len(students))
