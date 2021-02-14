@@ -49,7 +49,13 @@ class User:
             print(self.id, end=", ")
             print(self.name, end=", ")
             print(self.major, end=", ")
-            print(self.interests, end=", ")
+            interests = ["Outdoor Sports", "Gaming", "Coding", "Drawing/Painting", "Writing", "Reading", "Travelling",
+                         "Music",
+                         "Indoor Sports", "Arts and Crafts", "Action Movies", "Romance Movies", "Exercising", "Cooking",
+                         "photography", "Watching Theatre"]
+            for i in range(len(self.interests)):
+                if self.interests[i]:
+                    print(interests[i], end=" | ")
             print(self.clubs, end=", ")
             print(self.media, end=", ")
             print(self.classes)
