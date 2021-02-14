@@ -51,24 +51,24 @@ class App:
         self.scroll = pygame.image.load("scroll.png")
         self.sidebar_location = "right"
         self.sidebar_move_left = False
-        self.sidebar_move_right = True
+        self.sidebar_move_right = False
 
         self.app_clock = pygame.time.Clock()
         self.FPS = 60
 
     def update(self):
-        if self.sidebar_moved_left:
+        if self.sidebar_move_left:
             if self.sidebar.return_pos() > 1640:
                 self.sidebar.move_sidebar(self.velocity)
             else:
-                self.sidebar_moved_left = True
-                self.sidebar_moved_right = False
-        if self.sidebar_moved_right:
+                self.sidebar_move_left = False
+                self.sidebar_location = "left"
+        if self.sidebar_move_right:
             if self.sidebar.return_pos() < 1920:
                 self.sidebar.move_sidebar(-self.velocity)
             else:
-                self.sidebar_moved_right = True
-                self.sidebar_moved_left = False
+                self.sidebar_move_right = False
+                self.sidebar_location = "right"
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -80,6 +80,7 @@ class App:
     def mouse_up(self):
 
         self.pos = pygame.mouse.get_pos()
+
 
         if self.pos[0] > 1710 and self.pos[0] < 1730 and self.pos[1] < 35 and self.pos[1] > 5:
             if self.sidebar_location == "right":
