@@ -23,6 +23,7 @@ def preprocess(user1, user2):
             numList.append(1)
         else:
             numList.append(0)
-
+    commonClubs = 0
+    for club in user1.get_clubs
 
 

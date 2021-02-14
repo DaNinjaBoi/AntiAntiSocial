@@ -11,9 +11,9 @@ class User:
         self.major = splitline[3]
         self.interests = list(map(isTrue, splitline[4][1:-1].split(", ")))
         if len(splitline[6]) > 2:
-            self.club = splitline[6][1:-1].split(", ")
+            self.clubs = splitline[6][1:-1].split(", ")
         else:
-            self.club = []
+            self.clubs = []
         self.media = splitline[5][2:-2].split("', '")
         self.classes = list(map(int, splitline[7][1:-2].split(', ')))
 
@@ -30,8 +30,8 @@ class User:
     def get_interests(self):
         return self.interests
 
-    def get_club(self):
-        return self.club
+    def get_clubs(self):
+        return self.clubs
 
     def get_media_account(self):
         return self.media
@@ -50,7 +50,7 @@ class User:
             print(self.name, end=", ")
             print(self.major, end=", ")
             print(self.interests, end=", ")
-            print(self.club, end=", ")
+            print(self.clubs, end=", ")
             print(self.media, end=", ")
             print(self.classes)
 
