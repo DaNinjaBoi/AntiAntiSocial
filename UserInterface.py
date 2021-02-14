@@ -28,6 +28,9 @@ class Profile:
         self.rect = self.rect.move(self.velocity, 0)
         self.content_rect = self.content_rect.move(self.velocity, 0)
 
+    def draw_content(self):
+        pygame.draw.rect(self.screen, (255, 255, 255), pygame.Rect(1600, 91, 319, 370))
+
     def shape_shift(self, number):
         self.size2 = self.size2+number
 
@@ -71,6 +74,9 @@ class SocialMedia:
         self.velocity = velocity
         self.rect = self.rect.move(0, -self.velocity)
 
+    def draw_content(self):
+        pygame.draw.rect(self.screen, (255, 255, 255), pygame.Rect(1600, 147, 319, 240))
+
     def get_rect(self):
         return self.rect
 
@@ -111,6 +117,9 @@ class SuggestedFriends:
     def move_up(self, velocity):
         self.velocity = velocity
         self.rect = self.rect.move(0, -self.velocity)
+
+    def draw_content(self):
+        pygame.draw.rect(self.screen, (255, 255, 255), pygame.Rect(1600, 205, 319, 600))
 
     def get_rect(self):
         return self.rect
@@ -160,11 +169,16 @@ class Sidebar:
         if case == 1:
             self.social_media_tab.move_down(20)
             self.suggested_friends_tab.move_down(20)
+        elif case == 2:
+            self.suggested_friends_tab.move_down(20)
 
     def move_up_bar(self, case):
         if case == 1:
             self.social_media_tab.move_up(20)
             self.suggested_friends_tab.move_up(20)
+        elif case == 2:
+            self.suggested_friends_tab.move_up(20)
+
 
 
     def calculate_case(self):
@@ -228,7 +242,12 @@ class App:
         self.sidebar_move_right = False
 
         self.move_down_1 = False
+        self.moved_down = False
         self.move_up_1 = False
+        self.move_down_2 = False
+        self.moved_down2 = False
+        self.move_up_2 = False
+        self.moved_down3 = False
 
         self.app_clock = pygame.time.Clock()
         self.FPS = 60
@@ -248,22 +267,31 @@ class App:
                 self.sidebar_move_right = False
                 self.sidebar_location = "closed"
 
-        # if self.move_down_1 == True:
-        #     if self.sidebar.get_social().get_rect()[1] < 369+111:
-        #         self.sidebar.move_down_bar(1)
-        #         self.sidebar.get_profile().shape_shift(20)
-        #     else:
-        #         self.move_down_1 = False
-        # if self.move_up_1 == True:
-        #     if self.sidebar.get_social().get_rect()[1] > 111:
-        #         self.sidebar.move_up_bar(1)
-        #     else:
-        #         self.move_up_1 = False
+        if self.move_down_1 == True:
+            if self.sidebar.get_social().get_rect()[1] < 369+111:
+                 self.sidebar.move_down_bar(1)
+            else:
+                self.move_down_1 = False
+                self.moved_down = True
 
+        if self.move_up_1 == True:
+            if self.sidebar.get_social().get_rect()[1] > 111:
+                self.sidebar.move_up_bar(1)
+            else:
+                 self.move_up_1 = False
 
+        if self.move_down_2 == True:
+            if self.sidebar.get_friends().get_rect()[1] < 369+ 33:
+                 self.sidebar.move_down_bar(2)
+            else:
+                self.move_down_2 = False
+                self.moved_down2 = True
 
-
-
+        if self.move_up_2 == True:
+            if self.sidebar.get_friends().get_rect()[1] > 167:
+                self.sidebar.move_up_bar(2)
+            else:
+                 self.move_up_2 = False
 
 
     def handle_events(self):
@@ -289,6 +317,7 @@ class App:
             self.sidebar.get_profile().switch_drop_down()
             self.move_down_1 = True
         elif self.sidebar.get_profile().get_rect().collidepoint(self.pos) and self.sidebar.get_profile().get_drop_down():
+            self.moved_down = False
             self.sidebar.get_profile().set_image(pygame.image.load("profileWithTriangle.png"))
             self.sidebar.get_profile().switch_drop_down()
             self.sidebar.set_case_type()
@@ -296,14 +325,19 @@ class App:
         if self.sidebar.get_social().get_rect().collidepoint(self.pos) and not self.sidebar.get_social().get_drop_down():
             self.sidebar.get_social().set_image(pygame.image.load("socialmedia.png"))
             self.sidebar.get_social().switch_drop_down()
+            self.move_down_2 = True
         elif self.sidebar.get_social().get_rect().collidepoint(self.pos) and self.sidebar.get_social().get_drop_down():
+            self.moved_down2 = False
             self.sidebar.get_social().set_image(pygame.image.load("socialMediaWithTriangle.png"))
             self.sidebar.get_social().switch_drop_down()
             self.sidebar.set_case_type()
+            self.move_up_2 = True
         if self.sidebar.get_friends().get_rect().collidepoint(self.pos) and not self.sidebar.get_friends().get_drop_down():
             self.sidebar.get_friends().set_image(pygame.image.load("suggestedfriendsWithTriangle.png"))
             self.sidebar.get_friends().switch_drop_down()
+            self.moved_down3 = True
         elif self.sidebar.get_friends().get_rect().collidepoint(self.pos) and self.sidebar.get_friends().get_drop_down():
+            self.moved_down3 = False
             self.sidebar.get_friends().set_image(pygame.image.load("suggestedfriendstrianglenormal.png"))
             self.sidebar.get_friends().switch_drop_down()
             self.sidebar.set_case_type()
@@ -333,6 +367,13 @@ class App:
         self.sidebar.draw_sidebar()
 
         self.update()
+
+        if self.moved_down == True:
+            self.sidebar.profile_tab.draw_content()
+        elif self.moved_down2 == True:
+            self.sidebar.get_social().draw_content()
+        elif self.moved_down3 == True:
+            self.sidebar.get_friends().draw_content()
 
         self.screen.blit(self.scroll, (1903, 0))
 
