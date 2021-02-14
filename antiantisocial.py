@@ -3,7 +3,6 @@ import AAS_IO
 import AI
 
 
-
 if __name__ == "__main__":
 
     students = AAS_IO.importDummyNames()
