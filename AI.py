@@ -116,7 +116,10 @@ class AAS_AI():
             if userList[i] != userList[userIndex]:
                 k_best_matches.append([self.classify(userList[userIndex], userList[i]), i])
         k_best_matches.sort(key=lambda arr: arr[0], reverse=True)
-        return k_best_matches[:k]
+        k_best_matches = k_best_matches[:k]
+        output = []
+        for m in k_best_matches:
+            output.append(m[1])
 
 
 
