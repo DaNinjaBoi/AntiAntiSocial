@@ -5,7 +5,7 @@ import pygame
 
 class Profile:
 
-    def __init__(self, screen, image, content, position, velocity, size1, size2, text_color, text_string, text_font, text_position):
+    def __init__(self, screen, image, content, profile_name, profile_interests, profile_major,position, velocity, size1, size2, text_color, text_string, text_font, text_position):
         self.screen = screen
         self.image = image
         self.position = position
@@ -21,6 +21,10 @@ class Profile:
         self.text_font = text_font
         self.text_image = self.text_font.render(self.text_string, True, self.text_color)
         self.text_position = text_position
+        self.profile_name = profile_name
+        self.profile_interests = profile_interests
+        self.profile_major = profile_major
+
 
     def draw_profile(self):
         pygame.draw.rect(self.screen, (0, 0, 0), self.rect)
@@ -36,6 +40,15 @@ class Profile:
 
     def draw_content(self):
         pygame.draw.rect(self.screen, (255, 255, 255), pygame.Rect(1600, 94, 319, 370))
+
+
+    def display_text(self, output, pos, text_size):
+        text_color = pygame.Color("Black")
+        text_font = pygame.font.SysFont("Verdana", text_size)
+        text_image = text_font.render(output, True, text_color)
+        self.screen.blit(text_image, pos)
+
+
 
     def draw_text(self):
         self.screen.blit(self.text_image, self.text_position)
@@ -153,8 +166,11 @@ class Sidebar:
         self.student = student
         self.velocity = velocity
         self.color = (0, 0, 0)
-        self.profile_tab = Profile(self.screen, pygame.image.load("profileWithTriangle.png"), pygame.image.load("profileSpace.png"), (1925, 55), 10, 319, 0, pygame.Color("white"), self.student.get_name(), pygame.font.SysFont('DINPro', 21), (1741, 15))
+        self.profile_tab = Profile(self.screen, pygame.image.load("profileWithTriangle.png"), pygame.image.load("profileSpace.png"), self.student.get_name, self.student.get_interests(), self.student.get_major(), (1925, 55), 10, 319, 0, pygame.Color("white"), self.student.get_name(),
+                                   pygame.font.SysFont('DINPro', 21), (1741, 15))
+
         self.social_media_tab = SocialMedia(self.screen, pygame.image.load("socialMediaWithTriangle.png"), "", (1925, 111), 10)
+
         self.suggested_friends_tab = SuggestedFriends(self.screen, pygame.image.load("suggestedfriendstrianglenormal.png"), "", (1925, 167), 10)
         self.rect = pygame.Rect(self.position[0], self.position[1], self.size[0], self.size[1])
         self.drop_cases_list = []
@@ -287,6 +303,7 @@ class App:
                 self.move_down_1 = False
                 self.moved_down = True
 
+
         if self.move_up_1 == True:
             if self.sidebar.get_social().get_rect()[1] > 111:
                 self.sidebar.move_up_bar(1)
@@ -378,6 +395,22 @@ class App:
 
         if self.moved_down == True:
             self.sidebar.profile_tab.draw_content()
+            self.sidebar.profile_tab.display_text("Name: " + self.user.get_name(), (1605,260),17)
+            self.sidebar.profile_tab.display_text("Major: " + self.user.get_major(), (1605, 290),17)
+
+            interests = ["Outdoor Sports", "Gaming", "Coding", "Drawing/Painting", "Writing", "Reading", "Travelling",
+                         "Music",
+                         "Indoor Sports", "Arts and Crafts", "Action Movies", "Romance Movies", "Exercising", "Cooking",
+                         "photography", "Watching Theatre"]
+            users_interests = []
+            for i in range(len(self.user.get_interests())):
+                if self.user.get_interests()[i]:
+                    users_interests.append(interests[i])
+
+            self.sidebar.profile_tab.display_text("Interests: ", (1605,320), 17)
+            for i in range(len(users_interests)):
+                self.sidebar.profile_tab.display_text(users_interests[i], (1690, 30*i+320), 17)
+
         elif self.moved_down2 == True:
             self.sidebar.get_social().draw_content()
         elif self.moved_down3 == True:
