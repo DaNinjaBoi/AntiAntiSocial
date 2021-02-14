@@ -29,7 +29,7 @@ class Profile:
         self.content_rect = self.content_rect.move(self.velocity, 0)
 
     def draw_content(self):
-        pygame.draw.rect(self.screen, (255, 255, 255), pygame.Rect(1600, 91, 319, 370))
+        pygame.draw.rect(self.screen, (255, 255, 255), pygame.Rect(1600, 94, 319, 370))
 
     def shape_shift(self, number):
         self.size2 = self.size2+number
@@ -75,7 +75,7 @@ class SocialMedia:
         self.rect = self.rect.move(0, -self.velocity)
 
     def draw_content(self):
-        pygame.draw.rect(self.screen, (255, 255, 255), pygame.Rect(1600, 147, 319, 240))
+        pygame.draw.rect(self.screen, (255, 255, 255), pygame.Rect(1600, 149, 319, 240))
 
     def get_rect(self):
         return self.rect
