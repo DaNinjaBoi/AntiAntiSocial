@@ -108,13 +108,13 @@ class AAS_AI():
         Gives k best predictions from userList for the user at userIndex
         :param userList: list of user objects
         :param userIndex: index of target user in userList
-        :return: list of k top users
+        :return: list of indices of k top likely-to-be-friends users
         '''
 
         k_best_matches = []
-        for user in userList:
-            if user != userList[userIndex]:
-                k_best_matches.append([self.classify(userList[userIndex], user), user.get_id()])
+        for i in range(len(userList)):
+            if userList[i] != userList[userIndex]:
+                k_best_matches.append([self.classify(userList[userIndex], userList[i]), i])
         k_best_matches.sort(key=lambda arr: arr[0], reverse=True)
         return k_best_matches[:k]
 
