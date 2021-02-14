@@ -1,7 +1,7 @@
 
 import pygame
 
-class dropdown:
+class Dropdown:
 
     def __init__(self, dimensions, color, position):
         self.dimensions = dimensions
@@ -9,13 +9,13 @@ class dropdown:
         self.position = position
 
 
-class background:
+class Background:
 
     def __init__(self, image):
         self.image = image
 
 
-class app:
+class App:
 
     def __init__(self, screen, size):
         self.screen = screen
@@ -36,10 +36,25 @@ class app:
 
             self.handle_events()
 
-            self.game_clock.tick(self.FPS)
+            self.app_clock.tick(self.FPS)
 
 def main():
+
     pygame.init()
+
+    size = (1920, 1080)
+    screen = pygame.display.set_mode(size)
+
+    pygame.display.set_caption("Anti-Anti Social")
+
+    app = App(screen, size)
+
+    app.run()
+
+
+
+
+main()
 
 
 
