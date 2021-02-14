@@ -104,6 +104,7 @@ class SocialMedia:
         self.screen.blit(text_image, pos)
 
 
+
     def get_rect(self):
         return self.rect
 
@@ -399,7 +400,7 @@ class App:
             self.sidebar.get_friends().switch_drop_down()
             self.sidebar.set_case_type()
 
-        if self.button.get_rect().collidepoint(self.pos):
+        if self.button.get_rect().collidepoint(self.pos) and self.moved_down == True:
             print(15)
             self.user_index = random.randint(0,4999)
             self.user = self.students[self.user_index]
@@ -490,7 +491,6 @@ class App:
                     self.sidebar.suggested_friends_tab.display_text("                 " + ", ".join(interests[2:]),(1615, 80 * i + 277), 9)
 
 
-        self.sidebar.social_media_tab.display_text(str(len(accounts)), (1710, 127), 10)
         self.screen.blit(self.scroll, (1903, 0))
 
         # self.sidebar.profile_tab.draw_text()
