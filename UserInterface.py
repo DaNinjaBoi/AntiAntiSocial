@@ -5,7 +5,7 @@ import pygame
 
 class Profile:
 
-    def __init__(self, screen, image, content, profile_name, profile_interests, profile_major,position, velocity, size1, size2, text_color, text_string, text_font, text_position):
+    def __init__(self, screen, image, content, profile_name, profile_interests, profile_major,position, velocity, size1, size2):
         self.screen = screen
         self.image = image
         self.position = position
@@ -16,11 +16,6 @@ class Profile:
         self.rect = pygame.Rect(self.position[0], self.position[1], 319, 36)
         self.content_rect = pygame.Rect(self.position[0], self.position[1]-333, size1, size2)
         self.drop_down = False
-        self.text_color = text_color
-        self.text_string = text_string
-        self.text_font = text_font
-        self.text_image = self.text_font.render(self.text_string, True, self.text_color)
-        self.text_position = text_position
         self.profile_name = profile_name
         self.profile_interests = profile_interests
         self.profile_major = profile_major
@@ -49,9 +44,6 @@ class Profile:
         self.screen.blit(text_image, pos)
 
 
-
-    def draw_text(self):
-        self.screen.blit(self.text_image, self.text_position)
 
     def shape_shift(self, number):
         self.size2 = self.size2+number
@@ -102,6 +94,12 @@ class SocialMedia:
     def display_text(self, output, pos, text_size):
         text_color = pygame.Color("Black")
         text_font = pygame.font.SysFont("Verdana", text_size)
+        text_image = text_font.render(output, True, text_color)
+        self.screen.blit(text_image, pos)
+
+    def display_text2(self, output, pos, text_size):
+        text_color = pygame.Color("White")
+        text_font = pygame.font.SysFont("DINPro", text_size)
         text_image = text_font.render(output, True, text_color)
         self.screen.blit(text_image, pos)
 
@@ -179,8 +177,7 @@ class Sidebar:
         self.student = student
         self.velocity = velocity
         self.color = (0, 0, 0)
-        self.profile_tab = Profile(self.screen, pygame.image.load("profileWithTriangle.png"), pygame.image.load("profileSpace.png"), self.student.get_name, self.student.get_interests(), self.student.get_major(), (1925, 55), 10, 319, 0, pygame.Color("white"), self.student.get_name(),
-                                   pygame.font.SysFont('DINPro', 21), (1741, 15))
+        self.profile_tab = Profile(self.screen, pygame.image.load("profileWithTriangle.png"), pygame.image.load("profileSpace.png"), self.student.get_name, self.student.get_interests(), self.student.get_major(), (1925, 55), 10, 319, 0)
 
         self.social_media_tab = SocialMedia(self.screen, pygame.image.load("socialMediaWithTriangle.png"), "", (1925, 111), 10)
 
@@ -430,6 +427,11 @@ class App:
         self.sidebar.draw_sidebar()
 
         self.update()
+        if len(self.students[self.user_index].get_name()) <= 11:
+            self.sidebar.social_media_tab.display_text2(self.students[self.user_index].get_name(), (1741, 15), 21)
+        else:
+            self.sidebar.social_media_tab.display_text2(self.students[self.user_index].get_name(), (1741, 15), 15)
+
 
         if self.moved_down == True:
             self.sidebar.profile_tab.draw_content()
@@ -486,7 +488,7 @@ class App:
 
         self.screen.blit(self.scroll, (1903, 0))
 
-        self.sidebar.profile_tab.draw_text()
+        # self.sidebar.profile_tab.draw_text()
 
 
         pygame.display.flip()
